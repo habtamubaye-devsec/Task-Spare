@@ -19,7 +19,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('Email already in use');
+      throw new ConflictException(`The email address "${dto.email}" is already registered. Please use a different email or log in.`);
     }
 
     const hashedPassword = await hashPassword(dto.password);
@@ -42,13 +42,13 @@ export class AuthService {
     });
 
     if (!user || user.deletedAt) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid email or password. Please check your credentials and try again.');
     }
 
     const passwordValid = await comparePasswords(dto.password, user.passwordHash);
 
     if (!passwordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid email or password. Please check your credentials and try again.');
     }
 
     return this.generateTokens(user);
@@ -67,7 +67,7 @@ export class AuthService {
     });
 
     if (!refreshToken || refreshToken.revokedAt || refreshToken.expiresAt < new Date()) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException('Your session has expired or the security token is invalid. Please log in again.');
     }
 
     return this.generateTokens(refreshToken.user);

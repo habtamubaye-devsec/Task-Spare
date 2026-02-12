@@ -32,6 +32,7 @@ export class UsersService {
 
         return this.prisma.user.create({
             data: {
+                name: dto.name,
                 email: dto.email,
                 passwordHash: tempPassword,
                 organizationId: inviterOrgId,

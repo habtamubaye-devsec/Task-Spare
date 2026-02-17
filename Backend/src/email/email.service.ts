@@ -67,5 +67,18 @@ export class EmailService {
       `,
     });
   }
+
+  async sendOrganizationDeletedEmail(email: string, orgName: string) {
+    await this.transporter.sendMail({
+      from: '"Task Spare Support" <no-reply@taskspare.com>',
+      to: email,
+      subject: 'Organization Deleted',
+      html: `
+        <h1>Organization Deleted</h1>
+        <p>This is to inform you that the organization "<strong>${orgName}</strong>" you were part of has been deleted by an administrator.</p>
+        <p>You have been removed from the organization. You can now create a new organization or join another one.</p>
+      `,
+    });
+  }
 }
 

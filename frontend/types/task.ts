@@ -1,17 +1,36 @@
-import { User } from './auth';
+export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE'
 
-export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
-export type TaskPriority = 'LOW' | 'MEDIUM' | 'HIGH';
+export interface TaskUser {
+  id: string
+  email: string
+  name?: string
+}
+
+export interface Comment {
+  id: string
+  content: string
+  taskId: string
+  authorId: string
+  orgId: string
+  author?: TaskUser
+  createdAt?: string
+  updatedAt?: string
+}
 
 export interface Task {
-    id: string;
-    title: string;
-    description?: string;
-    status: TaskStatus;
-    priority?: TaskPriority;
-    projectId?: string;
-    assignee?: User;
-    createdAt?: string;
-    updatedAt?: string;
-    [key: string]: unknown;
+  id: string
+  title: string
+  description?: string | null
+  status: TaskStatus
+  projectId: string
+  creatorId: string
+  assigneeId?: string | null
+  orgId: string
+  createdAt?: string
+  updatedAt?: string
+  deletedAt?: string | null
+  assignee?: TaskUser | null
+  creator?: TaskUser | null
+  comments?: Comment[]
+  project?: { id: string; name: string }
 }

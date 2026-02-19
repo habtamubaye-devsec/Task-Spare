@@ -15,10 +15,12 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @ApiOperation({ summary: 'Invite a user to the organization' })
-    @Roles(Role.ADMIN)
+    @Roles(Role.ADMIN, Role.MANAGER)
     @Post('invite')
     async invite(@Body() dto: InviteUserDto, @Request() req: any) {
-        if (!req.user.orgId) throw new ForbiddenException('User is not in an organization');
+        if (!req.user.orgId) {
+            throw new ForbiddenException('You must belong to an organization to invite users');
+        }
         return this.usersService.invite(dto, req.user.orgId);
     }
 

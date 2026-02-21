@@ -33,6 +33,11 @@ enum TaskStatus {
   DONE
 }
 
+enum ProjectStatus {
+  ACTIVE
+  COMPLETED
+}
+
 //////////////////////////////////////////////////////
 // ORGANIZATION (TENANT)
 //////////////////////////////////////////////////////
@@ -84,6 +89,9 @@ model User {
   comments      Comment[]
   refreshTokens RefreshToken[]
 
+  managedProjects Project[]      @relation("ProjectManager")
+  memberProjects  Project[]      @relation("ProjectMembers")
+
   @@index([organizationId])
 }
 
@@ -119,11 +127,19 @@ model Project {
 
   tasks Task[]
 
+  status     ProjectStatus @default(ACTIVE)
+
+  managerId String
+  manager   User   @relation("ProjectManager", fields: [managerId], references: [id])
+
+  members User[] @relation("ProjectMembers")
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
   @@index([organizationId])
+  @@index([managerId])
 }
 
 //////////////////////////////////////////////////////

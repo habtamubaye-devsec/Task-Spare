@@ -15,37 +15,34 @@ export class ProjectsController {
     constructor(private readonly projectsService: ProjectsService) { }
 
     @ApiOperation({ summary: 'Create a new project' })
-    @Roles(Role.ADMIN, Role.MANAGER)
     @Post()
     async create(@Body() dto: CreateProjectDto, @Request() req: any) {
         if (!req.user.orgId) throw new ForbiddenException('User is not in an organization');
-        return this.projectsService.create(dto, req.user.orgId);
+        return this.projectsService.create(dto, req.user.userId, req.user.orgId);
     }
 
     @ApiOperation({ summary: 'List all projects' })
     @Get()
     async findAll(@Request() req: any) {
         if (!req.user.orgId) throw new ForbiddenException('User is not in an organization');
-        return this.projectsService.findAll(req.user.orgId);
+        return this.projectsService.findAll(req.user.userId, req.user.orgId, req.user.role, req.user.systemRole);
     }
 
     @ApiOperation({ summary: 'Get project details' })
     @Get(':id')
     async findOne(@Param('id') id: string, @Request() req: any) {
-        return this.projectsService.findOne(id, req.user.orgId);
+        return this.projectsService.findOne(id, req.user.userId, req.user.orgId, req.user.role, req.user.systemRole);
     }
 
     @ApiOperation({ summary: 'Update project' })
-    @Roles(Role.ADMIN, Role.MANAGER)
     @Patch(':id')
     async update(@Param('id') id: string, @Body() dto: UpdateProjectDto, @Request() req: any) {
-        return this.projectsService.update(id, dto, req.user.orgId);
+        return this.projectsService.update(id, dto, req.user.userId, req.user.orgId, req.user.role, req.user.systemRole);
     }
 
     @ApiOperation({ summary: 'Delete project' })
-    @Roles(Role.ADMIN)
     @Delete(':id')
     async remove(@Param('id') id: string, @Request() req: any) {
-        return this.projectsService.remove(id, req.user.orgId);
+        return this.projectsService.remove(id, req.user.userId, req.user.orgId, req.user.role, req.user.systemRole);
     }
 }

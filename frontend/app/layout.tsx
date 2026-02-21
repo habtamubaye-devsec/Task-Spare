@@ -1,37 +1,27 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google"; // Keep original fonts
-import "./globals.css";
-import ReduxProvider from "@/store/provider";
+import type { Metadata } from 'next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
+import './globals.css'
+import ReduxProvider from '@/store/provider'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const font = Plus_Jakarta_Sans({
+  variable: '--font-sans',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "TaskSpare",
-  description: "Project Management System",
-};
+  title: 'TaskSpare — Modern task management',
+  description: 'Collaborative task and project management for teams',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+    <html lang="en" className="dark">
+      <body className={`${font.variable} font-sans antialiased`}>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
-  );
+  )
 }

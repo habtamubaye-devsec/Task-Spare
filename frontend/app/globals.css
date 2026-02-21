@@ -1,100 +1,85 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
+  --color-background: hsl(var(--bg));
+  --color-foreground: hsl(var(--fg));
   --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-foreground: hsl(var(--card-fg));
   --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-foreground: hsl(var(--popover-fg));
   --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-foreground: hsl(var(--primary-fg));
   --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-foreground: hsl(var(--secondary-fg));
   --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-foreground: hsl(var(--muted-fg));
   --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-foreground: hsl(var(--accent-fg));
   --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-foreground: hsl(var(--destructive-fg));
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  
+  --color-success: hsl(var(--success));
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
 }
 
 @layer base {
   :root {
-    --background: 210 40% 98%; /* Slate 50 */
-    --foreground: 222.2 84% 4.9%; /* Slate 950 */
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
- 
-    --primary: 243 75% 59%; /* Indigo 600 */
-    --primary-foreground: 210 40% 98%;
- 
-    --secondary: 210 40% 96.1%; /* Slate 100 */
-    --secondary-foreground: 222.2 47.4% 11.2%;
- 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 243 75% 59%;
- 
-    --radius: 0.5rem;
-  }
- 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
- 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
- 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --bg: 240 10% 4%;
+    --fg: 0 0% 98%;
+    --card: 240 6% 8%;
+    --card-fg: 0 0% 98%;
+    --popover: 240 6% 8%;
+    --popover-fg: 0 0% 98%;
+    --primary: 263 70% 58%;
+    --primary-fg: 0 0% 100%;
+    --secondary: 240 5% 14%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 5% 14%;
+    --muted-fg: 240 5% 65%;
+    --accent: 263 70% 58%;
+    --accent-fg: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-fg: 0 0% 100%;
+    --border: 240 5% 18%;
+    --input: 240 5% 18%;
+    --ring: 263 70% 58%;
+    --success: 142 71% 45%;
+    --radius: 0.75rem;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+  html {
+    scroll-behavior: smooth;
   }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Subtle gradient mesh for hero / auth backgrounds */
+.gradient-mesh {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, hsl(263 70% 58% / 0.25), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, hsl(199 89% 48% / 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 0% 0%, hsl(263 70% 58% / 0.1), transparent);
+}
+
+/* Glass card */
+.glass {
+  @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+}
+
+/* Focus ring for accessibility */
+.focus-ring {
+  @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
 }

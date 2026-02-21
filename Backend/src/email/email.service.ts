@@ -80,5 +80,42 @@ export class EmailService {
       `,
     });
   }
+
+  async sendOrgJoinEmail(email: string, orgName: string, role: string) {
+    const dashboardUrl = `${this.configService.get<string>('FRONTEND_URL')}/dashboard`;
+
+    await this.transporter.sendMail({
+      from: '"Task Spare Support" <no-reply@taskspare.com>',
+      to: email,
+      subject: `You have been added to ${orgName}`,
+      html: `
+        <h1>Welcome to ${orgName}!</h1>
+        <p>You have been added to the organization <strong>${orgName}</strong> as a <strong>${role}</strong>.</p>
+        <p>You can now access the organization's dashboard.</p>
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="${dashboardUrl}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Dashboard</a>
+        </div>
+      `,
+    });
+  }
+
+  async sendAccountInviteEmail(email: string, token: string, orgName: string, role: string) {
+    const url = `${this.configService.get<string>('FRONTEND_URL')}/auth/reset-password?token=${token}`;
+
+    await this.transporter.sendMail({
+      from: '"Task Spare Support" <no-reply@taskspare.com>',
+      to: email,
+      subject: `Invitation to join ${orgName}`,
+      html: `
+        <h1>You've been invited!</h1>
+        <p>You have been invited to join <strong>${orgName}</strong> as a <strong>${role}</strong>.</p>
+        <p>To get started, please click the link below to set up your account and password:</p>
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="${url}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Set Up Account</a>
+        </div>
+        <p>This link will expire in 24 hours.</p>
+      `,
+    });
+  }
 }
 

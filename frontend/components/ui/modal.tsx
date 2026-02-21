@@ -25,7 +25,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <div className="w-full max-w-md bg-background rounded-lg shadow-lg border animate-in zoom-in-95 duration-200" role="dialog" aria-modal="true">
+            <div className="w-full max-w-md bg-card rounded-2xl border border-border shadow-xl" role="dialog" aria-modal="true">
                 <div className="flex items-center justify-between border-b px-6 py-4">
                     <h2 className="text-lg font-semibold">{title}</h2>
                     <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8 rounded-full">

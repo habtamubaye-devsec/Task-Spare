@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
+/* ─── Design system tokens ─── */
 @theme {
+  /* Dashboard (dark) palette — kept as-is */
   --color-background: hsl(var(--bg));
   --color-foreground: hsl(var(--fg));
   --color-card: hsl(var(--card));
@@ -26,8 +28,16 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
+
+  /* Landing-specific tokens */
+  --color-teal: #0d6e6e;
+  --color-teal-dark: #0a5555;
+  --color-teal-light: #e6f5f5;
+  --color-teal-50: #f0fafa;
+  --color-emerald-accent: #10b981;
 }
 
+/* ─── Dashboard dark root ─── */
 @layer base {
   :root {
     --bg: 240 10% 4%;
@@ -58,15 +68,17 @@
   * {
     @apply border-border;
   }
+
   html {
     scroll-behavior: smooth;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
   }
 }
 
-/* Subtle gradient mesh for hero / auth backgrounds */
+/* ─── Dashboard helpers ─── */
 .gradient-mesh {
   background:
     radial-gradient(ellipse 80% 50% at 50% -20%, hsl(263 70% 58% / 0.25), transparent),
@@ -74,12 +86,148 @@
     radial-gradient(ellipse 60% 40% at 0% 0%, hsl(263 70% 58% / 0.1), transparent);
 }
 
-/* Glass card */
 .glass {
   @apply border border-white/10 bg-white/5 backdrop-blur-xl;
 }
 
-/* Focus ring for accessibility */
 .focus-ring {
   @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+/* ═══════════════════════════════════════════════════
+   LANDING PAGE — light theme scoped to .landing
+   Overrides dark theme with !important where needed
+   ═══════════════════════════════════════════════════ */
+.landing {
+  --bg: 0 0% 100% !important;
+  --fg: 220 20% 14% !important;
+  --card: 0 0% 100% !important;
+  --card-fg: 220 20% 14% !important;
+  --muted: 220 14% 96% !important;
+  --muted-fg: 220 10% 46% !important;
+  --border: 220 13% 91% !important;
+  --input: 220 13% 91% !important;
+  --primary: 174 80% 24% !important;
+  --primary-fg: 0 0% 100% !important;
+  --accent: 174 80% 24% !important;
+  --accent-fg: 0 0% 100% !important;
+  --ring: 174 80% 24% !important;
+
+  background: #ffffff !important;
+  color: #1a202c !important;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Force all text inside .landing to use dark text */
+.landing h1,
+.landing h2,
+.landing h3,
+.landing h4,
+.landing h5,
+.landing h6 {
+  color: #111827;
+}
+
+.landing p {
+  color: #6b7280;
+}
+
+/* Hero gradient (teal slant) */
+.landing .hero-gradient {
+  background: linear-gradient(135deg, #e6f5f5 0%, #ffffff 50%) !important;
+}
+
+/* Section rhythm */
+.landing .section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 1024px) {
+  .landing .section-padding {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* Card hover lift */
+.landing .card-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.landing .card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -12px rgba(13, 110, 110, 0.15);
+}
+
+/* Teal CTA button */
+.landing .btn-teal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: #ffffff !important;
+  background: #0d6e6e !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.landing .btn-teal:hover {
+  background: #0a5555 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px -4px rgba(13, 110, 110, 0.4);
+}
+
+/* Outline button */
+.landing .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 2px solid #1a202c !important;
+  color: #1a202c !important;
+  background: transparent !important;
+  cursor: pointer;
+}
+
+.landing .btn-outline:hover {
+  background: #1a202c !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Glass panel for hero dashboard */
+.landing .glass-panel {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.1);
+}
+
+/* FAQ accordion animation */
+.landing .accordion-content {
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
+
+/* Footer dark */
+.landing .footer-dark {
+  background: #0d3d3d !important;
+  color: #d1e7e7 !important;
+}
+
+.landing .footer-dark h4 {
+  color: #ffffff !important;
+}
+
+.landing .footer-dark p,
+.landing .footer-dark a {
+  color: #94b8b8;
+}
+
+.landing .footer-dark a:hover {
+  color: #ffffff !important;
 }
